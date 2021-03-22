@@ -28,9 +28,12 @@ public class PlayerBehavior : MonoBehaviour
     public LayerMask groundMask;
     private bool isGrounded;
 
+    [Header("MiniMap")]
+    public GameObject miniMap;
 
-    //Health System
-    [Header("HealthBar")]
+
+  //Health System
+  [Header("HealthBar")]
     public HealthBar healthBar;
     public int maxHealth = 150;
     public int currentHealth;
@@ -53,20 +56,20 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
         //Jump code
-        Jump();
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+          Jump();
+        }
         //Checking if you're on the floor
         OnTheFloor();
-    //Grab inputs.
+        //Grab inputs.
 
-    // Input for WebGL and Desktop
-    // x = Input.GetAxis("Horizontal");
-    // z = Input.GetAxis("Vertical");
+        // Input for WebGL and Desktop
+        // x = Input.GetAxis("Horizontal");
+        // z = Input.GetAxis("Vertical");
 
-    float x = joystick.Horizontal;
-    float z = joystick.Vertical;
-
-    Debug.Log("X: " + x);
-    Debug.Log("Z: " + z);
+        float x = joystick.Horizontal;
+        float z = joystick.Vertical;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -85,6 +88,11 @@ public class PlayerBehavior : MonoBehaviour
 
         //Add the weight to our player
         controller.Move(velocity * Time.deltaTime);
+
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //  ToggleMiniMap();
+        //}
     }
     public void TakeDamage(int damage)
     {
@@ -99,11 +107,14 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Jump()
     {
-        //Jump code
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+    //Jump code
+    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    }
+
+    void ToggleMiniMap()
+    {
+        // toggle the MiniMap on/off
+        miniMap.SetActive(!miniMap.activeInHierarchy);
     }
     void OnTheFloor()
     {
@@ -130,4 +141,17 @@ public class PlayerBehavior : MonoBehaviour
 
         this.transform.position = position;
     }
+
+  public void OnJumpButtonPressed()
+  {
+    if (isGrounded)
+    {
+      Jump();
+    }
+  }
+
+  public void OnMapButtonPressed()
+  {
+    ToggleMiniMap();
+  }
 }

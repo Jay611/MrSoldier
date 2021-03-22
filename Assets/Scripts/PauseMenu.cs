@@ -15,19 +15,24 @@ public class PauseMenu : MonoBehaviour
     public void Update()
     {
         //When you press escape, pause the game. Press it again to resume the game.
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameIsPaused)
-            {
-                //Cursor.lockState = CursorLockMode.Locked;
-                Resume();
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    ToggleControlPanel();
+        //}
+    }
 
-            }
-            else
-            {
-                  //Cursor.lockState = CursorLockMode.Confined;
-                Pause();
-            }
+    private void ToggleControlPanel()
+    {
+        if (GameIsPaused)
+        {
+          //Cursor.lockState = CursorLockMode.Locked;
+          Resume();
+
+        }
+        else
+        {
+          //Cursor.lockState = CursorLockMode.Confined;
+          Pause();
         }
     }
 
@@ -62,5 +67,10 @@ public class PauseMenu : MonoBehaviour
         //Restart the game.
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level01");
+    }
+
+    public void OnControlButtonPressed()
+    {
+        ToggleControlPanel();
     }
 }
