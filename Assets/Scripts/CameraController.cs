@@ -7,11 +7,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("Controls")]
   public Joystick joystick;
-  public float horizontalSensitivity;
-  public float verticalSensitivity;
-
-    //Mouse sensitivity.
-  public float mouseSensitivity = 100f;
+  public float controlSensitivity = 2.0f;
 
     //Reference to the player body to rotate it as we move the camera.
     public Transform playerBody;
@@ -36,11 +32,11 @@ public class CameraController : MonoBehaviour
         }
 
     //Reference to the mouse motions.
-    //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-    //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+    //float mouseX = Input.GetAxis("Mouse X") * controlSensitivity * Time.deltaTime;
+    //float mouseY = Input.GetAxis("Mouse Y") * controlSensitivity * Time.deltaTime;
 
-    float mouseX = joystick.Horizontal;
-    float mouseY = joystick.Vertical;
+    float mouseX = joystick.Horizontal * controlSensitivity;
+    float mouseY = joystick.Vertical * controlSensitivity;
 
         //Rotate the camera up and down.
         xRotation -= mouseY;
